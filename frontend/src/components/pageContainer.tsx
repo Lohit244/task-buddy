@@ -11,6 +11,7 @@ import {
   faSearch,
   faCheck,
   faList,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function PageContainer({
@@ -42,7 +43,7 @@ export default function PageContainer({
       const end = { transform: `translate(0, 0)` }
       keyframes = [start, end]
     }
-    return new KeyframeEffect(el, keyframes as any, { duration: 300, easing: 'ease-out' });
+    return new KeyframeEffect(el, keyframes as any, { duration: 250, easing: 'ease-out' });
   })
 
   return (
@@ -106,6 +107,10 @@ const Sidebar = ({ closeFunction }: { closeFunction: () => void }) => {
   const { user, logout } = useAuth();
   return (
     <div className="flex flex-col border w-full md:w-64 overflow-y-auto">
+      <SidebarItem closeFunction={closeFunction} href="/" className="font-bold md:hidden">
+        <FontAwesomeIcon icon={faHome} />
+        Home
+      </SidebarItem>
       <SidebarItem closeFunction={closeFunction} href="/new">
         <FontAwesomeIcon icon={faPenToSquare} />
         New Task
@@ -143,11 +148,13 @@ const SidebarItem = ({
   href,
   onClick,
   closeFunction,
+  className,
 }: {
   children: React.ReactNode;
   href?: string;
   onClick?: () => void;
   closeFunction: () => void;
+  className?: string;
 }) => {
   const mainItem = (
     <div
@@ -157,7 +164,7 @@ const SidebarItem = ({
         }
         closeFunction();
       }}
-      className="border-y border-gray-200 text-blue-500 hover:text-blue-600 hover:bg-blue-50 rounded-sm px-2 py-4 cursor-pointer transition-colors w-full flex items-center pl-12 sm:pl-[40vw] justify-start md:pl-12 gap-4"
+      className={"border-y border-gray-200 text-blue-500 hover:text-blue-600 hover:bg-blue-50 rounded-sm px-2 py-4 cursor-pointer transition-colors w-full flex items-center pl-12 sm:pl-[40vw] justify-start md:pl-12 gap-4 " + className}
     >
       {children}
     </div>
