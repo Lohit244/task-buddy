@@ -9,11 +9,11 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  assignedTo: {
+  assignedTo: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-  },
+  }],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

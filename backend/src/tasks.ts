@@ -10,9 +10,9 @@ export const getTasksCreatedByMe = async (req: AuthenticatedRequest, res: Respon
   const { user } = req
   const tasks = await Task.find({ createdBy: user._id }).populate('assignedTo')
   tasks.forEach((task: any) => {
-    task.assignedTo.password = undefined
-    task.assignedTo.tasksAssigned = undefined
-    task.assignedTo.tasksCreated = undefined
+    task.assignedTo.forEach((assigned: any) => assigned.password = undefined)
+    task.assignedTo.forEach((assigned: any) => assigned.tasksAssigned = undefined)
+    task.assignedTo.forEach((assigned: any) => assigned.tasksCreated = undefined)
     task.createdBy = undefined
   })
 
@@ -20,7 +20,7 @@ export const getTasksCreatedByMe = async (req: AuthenticatedRequest, res: Respon
 }
 
 export const getTasksAssignedToMe = async (req: AuthenticatedRequest, res: Response) => {
-  try{
+  try {
     const { user } = req
     const tasks = await Task.find({ assignedTo: user._id }).populate('createdBy')
     tasks.forEach((task: any) => {
@@ -30,7 +30,7 @@ export const getTasksAssignedToMe = async (req: AuthenticatedRequest, res: Respo
       task.assignedTo = undefined
     })
     res.json({ tasks })
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ error: 'Something went wrong' })
     console.log(err)
   }
@@ -61,7 +61,7 @@ export const createTask = async (req: AuthenticatedRequest, res: Response) => {
 }
 
 export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
-  const { user } = req 
+  const { user } = req
   const { taskId, status, progress, notes } = req.body
   if (!taskId) {
     return res.status(422).json({ error: 'Must provide a taskId' })
@@ -70,11 +70,11 @@ export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
   if (!task) {
     return res.status(404).json({ error: 'Task not found' })
   }
-  if (task.createdBy.toJSON() !== user._id && task.assignedTo.toJSON() !== user._id) {
+  if (task.createdBy.toJSON() !== user._id && !task.toJSON().assignedTo.includes(user._id as any)) {
     return res.status(403).json({ error: 'You are not authorized to update this task' })
   }
   if (status) {
-    if(!['Accepted', 'In Progress', 'Completed', 'Rejected', 'Pending'].includes(status)) {
+    if (!['Accepted', 'In Progress', 'Completed', 'Rejected', 'Pending'].includes(status)) {
       return res.status(422).json({ error: 'Invalid status' })
     }
     task.status = status

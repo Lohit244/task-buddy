@@ -1,6 +1,7 @@
 import { app } from "./server"
-import { authMiddleware, getUser, login,signup } from "./auth"
+import { authMiddleware, getUser, login, signup } from "./auth"
 import { updateTask, getTasksCreatedByMe, getTasksAssignedToMe, createTask } from "./tasks"
+import { getUsers } from "./user"
 
 app.get('/healthcheck', async (req, res) => {
   res.json({ status: 'good' })
@@ -9,6 +10,8 @@ app.get('/healthcheck', async (req, res) => {
 app.get('/user', authMiddleware, (getUser as any))
 app.post('/login', login)
 app.post('/signup', signup)
+
+app.get('/allUsers', authMiddleware, (getUsers as any))
 
 app.get('/tasks/created', authMiddleware, (getTasksCreatedByMe as any))
 app.get('/tasks/assigned', authMiddleware, (getTasksAssignedToMe as any))
