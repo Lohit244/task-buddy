@@ -1,22 +1,15 @@
-// import Footer from './Footer'
 import Link from "next/link";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "@/context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faBarsStaggered,
   faBars,
-  faPaperclip,
-  faRightFromBracket,
-  faUsers,
   faPenToSquare,
-  faNewspaper,
   faSearch,
-  faPen,
   faCheck,
-  faTimeline,
   faList,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -28,7 +21,29 @@ export default function PageContainer({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, login, logout } = useAuth();
   const [pageAnimRef, _] = useAutoAnimate();
-  const [sidebarAnim, __] = useAutoAnimate();
+  const [sidebarAnim, __] = useAutoAnimate((el, action, oldCoords, newCoords) => {
+    let keyframes;
+    if (action === 'add') {
+      keyframes = [
+        { transform: 'translateX(-30rem)', opacity: 0 },
+        { transform: 'translateX(0px)', opacity: 1 }
+      ]
+    }
+    if (action === 'remove') {
+      keyframes = [
+        { transform: 'translateX(0px)', opacity: 1 },
+        { transform: 'translateX(-30rem)', opacity: 0 },
+      ]
+    }
+    if (action === 'remain') {
+      const deltaX = oldCoords!.left - newCoords!.left
+      const deltaY = oldCoords!.top - newCoords!.top
+      const start = { transform: `translate(${deltaX > 0 ? deltaX : 0}px, ${deltaY > 0 ? deltaY : 0}px)` }
+      const end = { transform: `translate(0, 0)` }
+      keyframes = [start, end]
+    }
+    return new KeyframeEffect(el, keyframes as any, { duration: 300, easing: 'ease-out' });
+  })
 
   return (
     <div className="flex flex-col h-screen w-screen">
@@ -49,7 +64,7 @@ export default function PageContainer({
             </li>
             <li className="flex flex-row w-full items-center justify-around">
               <Link href="/">
-                <p className="font-bold">TaskBuddy</p>
+                <p className="font-bold hidden sm:block">TaskBuddy</p>
               </Link>
               <div className="flex-1 hidden sm:block" />
             </li>
@@ -65,7 +80,7 @@ export default function PageContainer({
         </div>
       </header>
       <div
-        className="flex flex-row flex-1 w-screen overflow-x-hidden"
+        className="flex flex-row flex-1 ml-auto w-screen overflow-x-hidden"
         ref={sidebarAnim}
       >
         {sidebarOpen && (
@@ -75,7 +90,7 @@ export default function PageContainer({
             }}
           />
         )}
-        <div className="flex flex-col overflow-y-auto flex-1 pt-4 transition-all shadow-inner-md">
+        <div className={`flex flex-col overflow-y-auto flex-1 pt-4 transition-all shadow-inner-md ml-auto `}>
           <div className="flex-1 h-max">
             <div className="min-h-screen" ref={pageAnimRef}>
               {children}
