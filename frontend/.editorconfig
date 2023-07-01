@@ -1,0 +1,6 @@
+# top-most EditorConfig file
+root = true
+# Set 2 space as the default indentation
+[*]
+indent_style = space
+indent_size = 2
