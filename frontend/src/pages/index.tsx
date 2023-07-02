@@ -30,7 +30,7 @@ export default function Home() {
             At This Point you wish for some mechanism to track the progress of the other team member.
           </p>
           <p>
-            But you or you team mate ends up taking up a significant part of the task for the other team member.
+            But because a simple solution didn't exist one member ends up taking up a significant part of the task for both of the team members.
           </p>
         </div>
       </div>
