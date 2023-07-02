@@ -21,7 +21,7 @@ export default function Home() {
         <div className="flex flex-col gap-2 mt-4">
           <p> Your Team has a Task to do. </p>
           <p> You split the task among yourselves. </p>
-          <p> You realise you want some part of the task from the other team to be completed to make progress on you part. </p>
+          <p> You realise you want some part of the task from the other members to be completed to make progress on you part. </p>
           <p className="font-semibold">
             At This Point you wish for some mechanism to track the progress of the other team member.
           </p>
