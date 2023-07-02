@@ -1,6 +1,7 @@
 import Image from "next/image";
 import screenshot from "@/static/screenshot.png"
 import problem from "@/static/problem.png"
+import Link from "next/link";
 
 export default function Home() {
   return <div className="px-4 md:px-8 md:py-4 flex flex-col gap-16">
@@ -8,6 +9,9 @@ export default function Home() {
       <h1 className="text-4xl font-extrabold tracking-tight sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl flex-1">
         <span className="block">Manage And Split Tasks</span>
         <span className="block pb-3 text-blue-500 sm:pb-5">With Absolute Freedom</span>
+        <Link href="/login" className="text-4xl bg-black hover:bg-neutral-700 transition-colors mx-auto text-white font-bold py-2 px-4 rounded">
+          Get Started
+        </Link>
       </h1>
       <div className="flex flex-col items-center justify-center w-full flex-1">
         <Image src={screenshot} alt="TaskBUDDY" className="max-w-xl w-full object-contain object-left" />
@@ -26,7 +30,7 @@ export default function Home() {
             At This Point you wish for some mechanism to track the progress of the other team member.
           </p>
           <p>
-            But you or you team mate ends up taking up a significant part of the task of the other team member.
+            But you or you team mate ends up taking up a significant part of the task for the other team member.
           </p>
         </div>
       </div>
