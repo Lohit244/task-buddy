@@ -49,7 +49,7 @@ export default function Home() {
               <p> Due to the lack of a streamlined tracking mechanism, it becomes challenging to gauge the progress made by the struggling team member. As a result, another team member, recognizing the urgency and importance of the task, ends up taking on a significant portion of the work to compensate for their colleague&apos;s difficulties. </p>
               <p> You realise you want some part of the task from the other members to be completed to make progress on your part. </p>
               <p>
-                This increased workload on one team member not only impacts their productivity but also affects the overall balance of the team&apos;s responsibilities. It becomes apparent that without a clear means of monitoring progress and addressing issues promptly, tasks may become disproportionately distributed among team members, leading to inefficiencies and potential burnout.
+                This increased workload on one team member not only impacts their productivity but also affects the overall balance of the team&apos;s responsibilities. It becomes apparent that without a clear means of monitoring progress and addressing issues promptly, tasks may become disproportionately distributed among team members, leading to inefficiencies.
               </p>
             </div>
           </Tabs.Item>
