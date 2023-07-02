@@ -11,7 +11,7 @@ app.get('/user', authMiddleware, (getUser as any))
 app.post('/login', login)
 app.post('/signup', signup)
 
-app.get('/allUsers', authMiddleware, (getUsers as any))
+app.get('/allUsers', (getUsers as any))
 
 app.get('/tasks/created', authMiddleware, (getTasksCreatedByMe as any))
 app.get('/tasks/assigned', authMiddleware, (getTasksAssignedToMe as any))
