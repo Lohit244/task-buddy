@@ -1,19 +1,16 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useEffect, useState } from "react";
-
 export default function CircleSvg({ seed, bg = "#001220", fg = "#A7233A", className }: { seed: string, bg?: string, fg?: string, className: string }) {
   let hash = stringHash(seed);
   hash = hash * hash % 839;
   const circle1Radius = hash % 22 + 50;
-  const circle1X = hash % 100 + 550;
-  const circle1Y = hash % 100 + 60;
+  const circle1X = hash % 21 + 20;
+  const circle1Y = hash % 37 + 50;
   hash = hash * hash % 839;
   const circle2Radius = hash % 91 + 55;
-  const circle2X = hash % 400 + 200;
-  const circle2Y = hash % 192 + 250;
+  const circle2X = hash % 91 + 11;
+  const circle2Y = hash % 31 + 12;
   hash = hash * hash % 839;
   const circle3Radius = hash % 14 + 75;
-  const circle3X = hash % 121 + 14;
+  const circle3X = hash % 11 + 60;
   const circle3Y = hash % 29 + 25;
 
   return (
