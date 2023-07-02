@@ -22,12 +22,14 @@ export const getTasksCreatedByMe = async (req: AuthenticatedRequest, res: Respon
 export const getTasksAssignedToMe = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { user } = req
-    const tasks = await Task.find({ assignedTo: user._id }).populate('createdBy')
+    const tasks = await Task.find({ assignedTo: user._id }).populate('createdBy').populate('assignedTo')
     tasks.forEach((task: any) => {
       task.createdBy.password = undefined
       task.createdBy.tasksAssigned = undefined
       task.createdBy.tasksCreated = undefined
-      task.assignedTo = undefined
+      task.assignedTo.forEach((assigned: any) => assigned.password = undefined)
+      task.assignedTo.forEach((assigned: any) => assigned.tasksAssigned = undefined)
+      task.assignedTo.forEach((assigned: any) => assigned.tasksCreated = undefined)
     })
     res.json({ tasks })
   } catch (err) {

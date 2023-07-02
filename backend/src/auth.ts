@@ -26,7 +26,6 @@ export const authMiddleware = async (
 
   try {
     payload = jwt.verify(token, process.env.JWT_SECRET!);
-    console.log("payload verified");
   } catch (err) {
     return res.status(401).json({ error: "Invalid Token. Please Try Again" });
   }
