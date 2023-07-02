@@ -24,7 +24,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     enum: ["Accepted", "In Progress", "Completed", "Rejected", "Pending"],
   },
-  notes: String,
+  notes: {
+    type: String,
+    default: "",
+  },
 });
 
 export const Task = mongoose.model("Task", taskSchema);

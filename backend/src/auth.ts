@@ -86,6 +86,11 @@ export const signup = async (req: Request, res: Response) => {
       .json({ error: "Must provide name, email and password" });
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(422).json({ error: "Invalid email" });
+  }
+
   const emailInUse = await User.findOne({ email: email.toLowerCase() });
   if (emailInUse) {
     return res.status(409).json({ error: "Email already in use" });
