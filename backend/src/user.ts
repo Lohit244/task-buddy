@@ -31,3 +31,14 @@ export const getUsers = async (req: Request, res: Response) => {
   res.json({ users })
 }
 
+const getUserByName = async (req: AuthenticatedRequest, res: Response) => {
+  const { ids } = req.body;
+  const users = await User.find({
+    _id: {
+      $in: ids
+    }
+  }).select('-password -tasksAssigned -tasksCreated');
+  res.json(users)
+}
+
+

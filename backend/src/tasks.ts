@@ -56,7 +56,7 @@ export const createTask = async (req: AuthenticatedRequest, res: Response) => {
     let email = to[i];
     const t = await User.findOne({email:email.toLowerCase()});
     if(!t){
-      return res.status(404).json({ error: 'User not found' })
+      return res.status(404).json({ error: `User with email "${email}" not found` })
     }
     toUser.push(t._id);
   }
