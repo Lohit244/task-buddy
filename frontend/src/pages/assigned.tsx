@@ -98,8 +98,8 @@ export default function AssignedTasks() {
       {selectedTask && (
         <div className="flex flex-col md:flex-row gap-4 mt-4 w-full flex-wrap justify-center">
           <Card className="w-full hover:shadow-lg transition-shadow duration-300 ease-in-out" >
-            <div className="flex justify-end px-4 pt-4">
-              <div className="flex justify-end px-4 pt-4">
+            <div className="flex justify-end pt-4">
+              <div className="flex justify-end pt-4">
                 <div
                   className="cursor-pointer border border-slate-200 rounded-md p-2 hover:bg-slate-200 transition-colors"
                   onClick={() => {
