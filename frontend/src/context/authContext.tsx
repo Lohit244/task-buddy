@@ -105,14 +105,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    * and update the user object returned from the `useAuth` hook
    */
   const register = async (
-    username: string,
+    name: string,
     email: string,
     password: string
   ) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password, email }),
+      body: JSON.stringify({ name, password, email }),
     };
     try {
       setAuthLoading(true);
