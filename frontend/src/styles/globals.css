@@ -17,3 +17,7 @@ html {
 .focus\:ring-4{
   --tw-ring-color: rgba(0, 0, 0, 0) !important;
 }
+
+.sidebar:nth-child(1){
+  border-top: 0px;
+}

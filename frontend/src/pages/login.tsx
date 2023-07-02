@@ -1,9 +1,11 @@
 import { useAuth } from "@/context/authContext";
-import { Spinner, Tabs } from "flowbite-react";
+import { Label, Spinner, Tabs, TextInput } from "flowbite-react";
 import { HiUserCircle, HiUserAdd } from "react-icons/hi"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faPen, faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const { user, login, register, authLoading, authError } = useAuth();
@@ -17,7 +19,7 @@ export default function Login() {
     let t: NodeJS.Timeout;
     if (user) {
       t = setTimeout(() => {
-        router.push("/");
+        router.push("/assigned");
       }, 500);
     }
     return () => {
@@ -37,13 +39,13 @@ export default function Login() {
 
   if (user) {
     return <div className="min-h-[70vh] flex flex-col items-center justify-center">
-      <div className="font-bold text-2xl">Logged in</div>
-      <div className="text-neutral-800">Redirecting to Home Page</div>
+      <div className="font-bold text-2xl">Logged In</div>
+      <div className="text-neutral-800">Redirecting To Your Assigned Tasks</div>
       <Spinner />
     </div>
   }
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
+    <div className="flex flex-col min-h-screen items-center justify-center px-2 sm:px-4">
       <div className="border border-neutral-200 rounded-lg p-4 w-full sm:w-96" ref={aniimRef}>
         {authError && <div className="bg-red-500 text-white rounded-lg p-2 m-2">{authError}</div>}
         <Tabs.Group aria-label="Login/Register Tabs" style="fullWidth">
@@ -53,21 +55,23 @@ export default function Login() {
               handleLogin();
             }}>
               <div className="flex flex-col gap-2">
-                <label htmlFor="email">Email</label>
-                <input
+                <Label htmlFor="email">Email</Label>
+                <TextInput
                   type="email"
                   id="email"
-                  className="border border-neutral-200 rounded-lg p-2"
+                  addon={<FontAwesomeIcon icon={faEnvelope} />}
+                  required
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
-                <label htmlFor="password">Password</label>
-                <input
+                <Label htmlFor="password">Password</Label>
+                <TextInput
                   type="password"
                   id="password"
-                  className="border border-neutral-200 rounded-lg p-2"
+                  required
+                  addon={<FontAwesomeIcon icon={faPen} />}
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -75,7 +79,7 @@ export default function Login() {
                 />
               </div>
               <button
-                className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 transition-colors duration-200 disabled:border-slate-500 disabled:hover:bg-slate-600"
+                className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 transition-colors duration-200 disabled:bg-slate-500 disabled:hover:bg-slate-600"
                 onClick={handleLogin}
                 disabled={authLoading}
               >
@@ -90,31 +94,31 @@ export default function Login() {
               handleRegister();
             }}>
               <div className="flex flex-col gap-2">
-                <label htmlFor="name">Name</label>
-                <input
+                <Label htmlFor="name">Name</Label>
+                <TextInput
                   type="text"
                   id="name"
-                  className="border border-neutral-200 rounded-lg p-2"
+                  addon={<FontAwesomeIcon icon={faUser} />}
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                 />
-                <label htmlFor="email">Email</label>
-                <input
+                <Label htmlFor="email">Email</Label>
+                <TextInput
                   type="email"
                   id="email"
-                  className="border border-neutral-200 rounded-lg p-2"
+                  addon={<FontAwesomeIcon icon={faEnvelope} />}
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
-                <label htmlFor="password">Password</label>
-                <input
+                <Label htmlFor="password">Password</Label>
+                <TextInput
                   type="password"
                   id="password"
-                  className="border border-neutral-200 rounded-lg p-2"
+                  addon={<FontAwesomeIcon icon={faPen} />}
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -122,7 +126,7 @@ export default function Login() {
                 />
               </div>
               <button
-                className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 transition-colors duration-200 disabled:border-slate-500 disabled:hover:bg-slate-600"
+                className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 transition-colors duration-200 disabled:bg-slate-500 disabled:hover:bg-slate-600"
                 onClick={handleRegister}
                 disabled={authLoading}
               >

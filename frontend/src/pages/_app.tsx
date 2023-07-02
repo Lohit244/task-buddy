@@ -1,17 +1,21 @@
 import PageContainer from "@/components/pageContainer";
 import { AuthProvider } from "@/context/authContext";
 import "@/styles/globals.css";
-import { Flowbite } from "flowbite-react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
+
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <AuthProvider>
-        <PageContainer>
-          <Component {...pageProps} />
-        </PageContainer>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient} >
+        <AuthProvider>
+          <PageContainer>
+            <Component {...pageProps} />
+          </PageContainer>
+        </AuthProvider>
+      </QueryClientProvider>
     </>
   );
 }

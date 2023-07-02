@@ -73,7 +73,7 @@ export default function PageContainer({
             <div className="flex-1" />
             {authLoading && <Spinner />}
             {user ? (
-              <Link href="/assigned">{user.name}</Link>
+              <Link href="/assigned">{user.name.slice(0,10) + (user.name.length>10 ? "...":"")}</Link>
             ) : (
               <Link href="/login">
                 <p className={`font-bold ${authError && "text-rose-500"}`}>Login</p>
@@ -108,7 +108,7 @@ export default function PageContainer({
 const Sidebar = ({ closeFunction }: { closeFunction: () => void }) => {
   const { user, logout } = useAuth();
   return (
-    <div className="flex flex-col border w-full md:w-64 overflow-y-auto">
+    <div className="flex flex-col border w-full md:w-64 overflow-y-auto sidebar">
       <SidebarItem closeFunction={closeFunction} href="/" className="font-bold md:hidden">
         <FontAwesomeIcon icon={faHome} />
         Home
