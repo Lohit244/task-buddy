@@ -13,6 +13,7 @@ import {
   faList,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "flowbite-react";
 
 export default function PageContainer({
   children,
@@ -20,7 +21,7 @@ export default function PageContainer({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user, login, logout } = useAuth();
+  const { user, authLoading, authError } = useAuth();
   const [pageAnimRef, _] = useAutoAnimate();
   const [sidebarAnim, __] = useAutoAnimate((el, action, oldCoords, newCoords) => {
     let keyframes;
@@ -47,7 +48,7 @@ export default function PageContainer({
   })
 
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="flex flex-col h-screen h-actualscreen w-screen">
       <header className="py-2 px-4 border-slate-200 border">
         <div className="flex w-full items-center justify-center bg-white text-black font-bold py-2">
           <ul className="px-2 sm:px-4 flex items-center gap-4 w-full">
@@ -70,11 +71,12 @@ export default function PageContainer({
               <div className="flex-1 hidden sm:block" />
             </li>
             <div className="flex-1" />
+            {authLoading && <Spinner />}
             {user ? (
               <Link href="/assigned">{user.name}</Link>
             ) : (
               <Link href="/login">
-                <p className="font-bold">Login</p>
+                <p className={`font-bold ${authError && "text-rose-500"}`}>Login</p>
               </Link>
             )}
           </ul>
@@ -171,5 +173,5 @@ const SidebarItem = ({
   );
 
   if (href) return <Link href={href}>{mainItem}</Link>;
-  else return <>{mainItem}</>;
+  else return mainItem;
 };

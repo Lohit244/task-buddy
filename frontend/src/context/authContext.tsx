@@ -19,17 +19,17 @@ type AuthContextValue = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (name: string, email: string, password: string) => Promise<void>;
-  refetchUser: (user?: User) => Promise<void>;
+  refetchUser: (token: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
   authLoading: false,
   authError: null,
-  login: async () => {},
-  logout: () => {},
-  register: async () => {},
-  refetchUser: async () => {},
+  login: async () => { },
+  logout: () => { },
+  register: async () => { },
+  refetchUser: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authLoading, setAuthLoading] = useState(false);
 
   /**
-   * Pass in the username, password and type of user to login.
+   * Pass in the name and password of user to login.
    *
    * user object can be accessed from the `useAuth` hook's user property
    */
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         };
         setUser(usr);
         if (typeof Storage !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(usr));
+          localStorage.setItem("token", resData.token);
         }
       }
       setAuthLoading(false);
@@ -80,26 +80,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    */
   const logout = () => {
     if (typeof Storage !== "undefined") {
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     }
     setUser(null);
   };
 
-  // get data from token
+  // get User from localStorage and make sure that the data is up to date
   useEffect(() => {
     if (typeof Storage === "undefined") return;
     try {
-      const user = localStorage.getItem("user");
-      if (!user) return;
-      const userObj = JSON.parse(user);
-      const token = userObj.token;
-      const parsedToken: any = jwt(token);
-      if (!parsedToken.exp || parsedToken.exp < Date.now() / 1000) {
-        logout();
-        return;
-      }
-      refetchUser(userObj);
-      // this will also ensure that the token is correct
+      const token = localStorage.getItem("token");
+      if(!token) return;
+      refetchUser(token);
     } catch (err) {
       setAuthError("Your past login data is corrupted, please login again");
       logout();
@@ -117,7 +109,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     email: string,
     password: string
   ) => {
-    // TODO: data validation
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -140,7 +131,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         };
         setUser(usr);
         if (typeof Storage !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(usr));
+          localStorage.setItem("token", resData.token);
         }
       }
       setAuthLoading(false);
@@ -150,11 +141,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   /**
-   * Update the user's progress from the backend
-   * and update the userProgress object returned from the `useAuth` hook
+   * Update the user's object from the backend
+   * and update the user object returned from the `useAuth` hook
    */
-  const refetchUser = async (user?: User) => {
-    if (!user) return;
+  const refetchUser = async (token: string) => {
     try {
       setAuthLoading(true);
       setAuthError(null);
@@ -162,7 +152,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       const resData = await res.json();
@@ -172,7 +162,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (resData.user) {
         setUser({
           name: resData.user.name,
-          token: user.token,
+          token: token,
         });
       }
       setAuthLoading(false);
@@ -201,7 +191,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 /**
  * example usage: -
   ```
-  const { user, error, login, logout, register } = useAuth();
+  const { user, authLoading, authError, login, logout, register, refetchUser } = useAuth();
   ```
  * user has the user's data if they are authenticated
  * else it is null. Login, logout and register are functions.

@@ -10,3 +10,10 @@ html {
   --tw-shadow: inset 0 4px 6px 0 rgb(0 0 0 / 0.05) !important;
   @apply shadow-inner;
 }
+
+.h-actualscreen{
+  height: 100svh;
+}
+.focus\:ring-4{
+  --tw-ring-color: rgba(0, 0, 0, 0) !important;
+}
