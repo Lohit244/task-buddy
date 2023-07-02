@@ -65,18 +65,18 @@ export default function AssignedTasks() {
     setSelectedTask(task);
   }
 
-  if (!user) {
-    return <div className="min-h-[70vh] flex flex-col items-center justify-center">
-      <div className="font-bold text-2xl">Not Logged In</div>
-      <div className="text-neutral-800">Redirecting To Login Page</div>
-      <Spinner />
-    </div>
-  }
-
   if (isLoading || authLoading) {
     return <div className="min-h-[70vh] flex flex-col items-center justify-center">
       <div className="font-bold text-2xl">Loading</div>
       <div className="text-neutral-800">Please wait</div>
+      <Spinner />
+    </div>
+  }
+
+  if (!user) {
+    return <div className="min-h-[70vh] flex flex-col items-center justify-center">
+      <div className="font-bold text-2xl">Not Logged In</div>
+      <div className="text-neutral-800">Redirecting To Login Page</div>
       <Spinner />
     </div>
   }
@@ -99,16 +99,16 @@ export default function AssignedTasks() {
         <div className="flex flex-col md:flex-row gap-4 mt-4 w-full flex-wrap justify-center">
           <Card className="w-full hover:shadow-lg transition-shadow duration-300 ease-in-out" >
             <div className="flex justify-end px-4 pt-4">
-            <div className="flex justify-end px-4 pt-4">
-              <div
-                className="cursor-pointer border border-slate-200 rounded-md p-2 hover:bg-slate-200 transition-colors"
-                onClick={() => {
-                  setSelectedTask(null)
-                  taskMutation.reset()
-                }}>
-                Cancel
+              <div className="flex justify-end px-4 pt-4">
+                <div
+                  className="cursor-pointer border border-slate-200 rounded-md p-2 hover:bg-slate-200 transition-colors"
+                  onClick={() => {
+                    setSelectedTask(null)
+                    taskMutation.reset()
+                  }}>
+                  Cancel
+                </div>
               </div>
-            </div>
             </div>
             {taskMutation.isError && (<div className="bg-red-100 text-red-800 p-4 rounded-md">
               {(taskMutation.error as any)?.response?.data?.error || "Something went wrong"}

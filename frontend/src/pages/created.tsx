@@ -65,18 +65,18 @@ export default function AssignedTasks() {
     setSelectedTask(task);
   }
 
-  if (!user) {
-    return <div className="min-h-[70vh] flex flex-col items-center justify-center">
-      <div className="font-bold text-2xl">Not Logged In</div>
-      <div className="text-neutral-800">Redirecting To Login Page</div>
-      <Spinner />
-    </div>
-  }
-
   if (isLoading || authLoading) {
     return <div className="min-h-[70vh] flex flex-col items-center justify-center">
       <div className="font-bold text-2xl">Loading</div>
       <div className="text-neutral-800">Please wait</div>
+      <Spinner />
+    </div>
+  }
+
+  if (!user) {
+    return <div className="min-h-[70vh] flex flex-col items-center justify-center">
+      <div className="font-bold text-2xl">Not Logged In</div>
+      <div className="text-neutral-800">Redirecting To Login Page</div>
       <Spinner />
     </div>
   }

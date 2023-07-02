@@ -58,6 +58,14 @@ export default function NewTask() {
     };
   })
 
+  if (newTaskMutation.isLoading || authLoading) {
+    return <div className="min-h-[70vh] flex flex-col items-center justify-center">
+      <div className="font-bold text-2xl">Loading</div>
+      <div className="text-neutral-800">Please wait</div>
+      <Spinner />
+    </div>
+  }
+
   if (!user) {
     return <div className="min-h-[70vh] flex flex-col items-center justify-center">
       <div className="font-bold text-2xl">Not Logged In</div>
@@ -66,13 +74,6 @@ export default function NewTask() {
     </div>
   }
 
-  if (newTaskMutation.isLoading || authLoading) {
-    return <div className="min-h-[70vh] flex flex-col items-center justify-center">
-      <div className="font-bold text-2xl">Loading</div>
-      <div className="text-neutral-800">Please wait</div>
-      <Spinner />
-    </div>
-  }
   return (
     <div className="flex flex-col px-4">
       <div className="font-bold text-2xl">New Task</div>
