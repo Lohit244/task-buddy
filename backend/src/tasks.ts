@@ -93,7 +93,7 @@ export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
     console.log(task.createdBy, user._id, task.toJSON().assignedTo)
     return res.status(403).json({ error: 'You are not authorized to update this task' })
   }
-  if (status) {
+  if (status != task.status) {
     if(!task.assignedTo.includes(user._id as any)){
       return res.status(403).json({ error: 'You are not authorized to update this task' })
     }
