@@ -27,7 +27,7 @@ export default function Home() {
           <p> You split the task among yourselves. </p>
           <p> You realise you want some part of the task from the other members to be completed to make progress on you part. </p>
           <p className="font-semibold">
-            At This Point you wish for some mechanism to track the progress of the other team member.
+            At this point you wish for some mechanism to track the progress of the other team member.
           </p>
           <p>
             But because a simple solution didn't exist one member ends up taking up a significant part of the task for both of the team members.
