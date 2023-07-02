@@ -1,10 +1,9 @@
 import CircleSvg from "@/components/randomCircle";
 import { useAuth } from "@/context/authContext";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Button, Card, Dropdown, Label, Progress, RangeSlider, Select, Spinner, Textarea } from "flowbite-react";
-import ButtonGroup from "flowbite-react/lib/esm/components/Button/ButtonGroup";
+import { Button, Card, Label, Progress, RangeSlider, Select, Spinner, Textarea } from "flowbite-react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

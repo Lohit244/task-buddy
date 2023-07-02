@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPen, faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const { user, login, register, authLoading, authError } = useAuth();
