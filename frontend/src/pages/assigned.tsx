@@ -164,6 +164,15 @@ export default function AssignedTasks() {
                 notes: e.target.value
               })
             }} />
+            <Label htmlFor="assignedTo">Assigned To:</Label>
+            <div className="flex flex-col sm:flex-row gap-2 flex-wrap ">
+              {selectedTask.assignedTo.map((user) => (
+                <Card key={user._id} className="max-w-md" >
+                  <div className="font-bold text-xl break-words">{user.name}</div>
+                  <div className="text-neutral-800 break-words">{user.email}</div>
+                </Card>
+              ))}
+            </div>
             <Button disabled={taskMutation.isLoading} className="bg-blue-500 hover:bg-blue-600 transition-colors" onClick={() => {
               taskMutation.mutate(selectedTask);
             }}>
@@ -215,6 +224,8 @@ const AssignedTaskCard = ({ task, onClick }: { task: Task, onClick: () => any })
       <div className="font-semibold self-end">
         {task.createdBy.name}
       </div>
+
+
     </Card>
   )
 }

@@ -151,7 +151,7 @@ export default function AssignedTasks() {
             }} />
 
             <Label htmlFor="assignedTo">Assigned To:</Label>
-            <div className="flex flex-row gap-2 flex-wrap">
+            <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
               {selectedTask.assignedTo.map((user) => (
                 <Card key={user._id} className="max-w-md" >
                   <div className="font-bold text-xl break-words">{user.name}</div>
