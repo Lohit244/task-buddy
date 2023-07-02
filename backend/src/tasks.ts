@@ -48,14 +48,14 @@ export const createTask = async (req: AuthenticatedRequest, res: Response) => {
   if (!name) {
     return res.status(422).json({ error: 'Must provide a name for the task' })
   }
-  if(to.length===0){
+  if (to.length === 0) {
     return res.status(422).json({ error: 'Must provide a user to assign the task to' })
   }
-  const toUser:mongoose.Types.ObjectId[] = []
-  for(let i=0;i<to.length;i++){
+  const toUser: mongoose.Types.ObjectId[] = []
+  for (let i = 0; i < to.length; i++) {
     let email = to[i];
-    const t = await User.findOne({email:email.toLowerCase()});
-    if(!t){
+    const t = await User.findOne({ email: email.toLowerCase() });
+    if (!t) {
       return res.status(404).json({ error: `User with email "${email}" not found` })
     }
     toUser.push(t._id);
@@ -72,7 +72,7 @@ export const createTask = async (req: AuthenticatedRequest, res: Response) => {
     progress: 0,
   })
   await User.findByIdAndUpdate(user._id, { $push: { tasksCreated: task._id } }, { new: true }).exec()
-  for(let i=0;i<toUser.length;i++){
+  for (let i = 0; i < toUser.length; i++) {
     let id = toUser[i];
     await User.findByIdAndUpdate(id, { $push: { tasksAssigned: task._id } }, { new: true }).exec()
   }
@@ -81,7 +81,7 @@ export const createTask = async (req: AuthenticatedRequest, res: Response) => {
 
 export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
   const { user } = req
-  const { taskId, status, progress, notes, desc,assignedTo } = req.body
+  const { taskId, status, progress, notes, desc, assignedTo } = req.body
   if (!taskId) {
     return res.status(422).json({ error: 'Must provide a taskId' })
   }
@@ -90,12 +90,11 @@ export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
     return res.status(404).json({ error: 'Task not found' })
   }
   if (task.createdBy !== (user._id as any) && !task.assignedTo.includes(user._id as any)) {
-    console.log(task.createdBy, user._id, task.toJSON().assignedTo)
     return res.status(403).json({ error: 'You are not authorized to update this task' })
   }
 
   if (status != task.status) {
-    if(!task.assignedTo.includes(user._id as any)){
+    if (!task.assignedTo.includes(user._id as any)) {
       return res.status(403).json({ error: 'You are not authorized to update this task' })
     }
     if (!['Accepted', 'In Progress', 'Completed', 'Rejected', 'Pending'].includes(status)) {
@@ -105,7 +104,7 @@ export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
   }
 
   if (progress && progress != task.progress) {
-    if(!task.assignedTo.includes(user._id as any)){
+    if (!task.assignedTo.includes(user._id as any)) {
       return res.status(403).json({ error: 'You are not authorized to update this task' })
     }
     if (progress < 0 || progress > 100) {
@@ -116,19 +115,19 @@ export const updateTask = async (req: AuthenticatedRequest, res: Response) => {
   if (notes) {
     task.notes = notes
   }
-  if(desc) {
+  if (desc) {
     task.description = desc
   }
-  if(task.status === 'Completed') {
+  if (task.status === 'Completed') {
     task.progress = 100
   }
-  if(task.status === 'Pending') {
+  if (task.status === 'Pending') {
     task.progress = 0
   }
-  if(assignedTo){
-    const user = await User.findOne({email:assignedTo})
-    if(!user){
-      return res.status(404).json({error:'User not found'})
+  if (assignedTo) {
+    const user = await User.findOne({ email: assignedTo })
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
     }
     task.assignedTo.push(user._id)
     user.tasksAssigned.push(task._id)
