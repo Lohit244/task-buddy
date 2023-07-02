@@ -71,6 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthLoading(false);
     } catch (err) {
       setAuthError("Request Failed, please try again");
+      setAuthLoading(false);
     }
   };
 
@@ -137,6 +138,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthLoading(false);
     } catch (err) {
       setAuthError("Request Failed, please try again");
+      setAuthLoading(false);
     }
   };
 
@@ -168,6 +170,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthLoading(false);
     } catch (err) {
       setAuthError("Request Failed, please try again");
+      setAuthLoading(false);
     }
   };
 
