@@ -1,12 +1,12 @@
 import { useAuth } from "@/context/authContext";
 import { Spinner, Tabs } from "flowbite-react";
-import {HiUserCircle,HiUserAdd} from "react-icons/hi"
+import { HiUserCircle, HiUserAdd } from "react-icons/hi"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Login() {
-  const { user, login, register,authLoading,authError } = useAuth();
+  const { user, login, register, authLoading, authError } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -48,7 +48,10 @@ export default function Login() {
         {authError && <div className="bg-red-500 text-white rounded-lg p-2 m-2">{authError}</div>}
         <Tabs.Group aria-label="Login/Register Tabs" style="fullWidth">
           <Tabs.Item active title="Login" icon={HiUserCircle}>
-            <div className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4" onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}>
               <div className="flex flex-col gap-2">
                 <label htmlFor="email">Email</label>
                 <input
@@ -79,10 +82,13 @@ export default function Login() {
                 Login
                 {authLoading && <Spinner className="ml-2" />}
               </button>
-            </div>
+            </form>
           </Tabs.Item>
           <Tabs.Item title="Register" icon={HiUserAdd}>
-            <div className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4" onSubmit={(e) => {
+              e.preventDefault();
+              handleRegister();
+            }}>
               <div className="flex flex-col gap-2">
                 <label htmlFor="name">Name</label>
                 <input
@@ -123,7 +129,7 @@ export default function Login() {
                 Register
                 {authLoading && <Spinner className="ml-2" />}
               </button>
-            </div>
+            </form>
           </Tabs.Item>
         </Tabs.Group>
       </div>
