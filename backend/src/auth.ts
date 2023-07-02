@@ -64,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(422).json({ error: "Must provide email and password" });
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: email.toLowerCase() });
   if (!user) {
     return res.status(403).json({ error: "Invalid password or email" });
   }
@@ -87,7 +87,7 @@ export const signup = async (req: Request, res: Response) => {
       .json({ error: "Must provide name, email and password" });
   }
 
-  const emailInUse = await User.findOne({ email });
+  const emailInUse = await User.findOne({ email: email.toLowerCase() });
   if (emailInUse) {
     return res.status(409).json({ error: "Email already in use" });
   }
@@ -96,7 +96,7 @@ export const signup = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await User.create({
       name,
-      email,
+      email: email.toLowerCase(),
       password: hashedPassword,
     });
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!);
