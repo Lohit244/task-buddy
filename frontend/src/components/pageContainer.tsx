@@ -3,6 +3,8 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
 import { useAuth } from "@/context/authContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image"
+import logo from "@/static/logo.png"
 import {
   faUser,
   faBarsStaggered,
@@ -66,7 +68,9 @@ export default function PageContainer({
             </li>
             <li className="flex flex-row w-full items-center justify-around">
               <Link href="/">
-                <p className="font-bold hidden sm:block">TaskBuddy</p>
+                <p className="font-bold hidden sm:block">
+                  <Image src={logo} alt="TaskBUDDY" className="max-h-[3rem] object-contain object-left" />
+                </p>
               </Link>
               <div className="flex-1 hidden sm:block" />
             </li>

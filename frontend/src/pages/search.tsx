@@ -37,6 +37,7 @@ export default function Search({ data }: Props) {
         placeholder="Search for a user"
         className="mt-4"
         addon={<FontAwesomeIcon icon={faSearch} />}
+        helperText="Enter the name of the user you want to search for"
       />
       <div className="flex flex-col md:flex-row gap-4 mt-4 w-full flex-wrap justify-center" ref={animRef}>
         {filteredData.map((user) => (

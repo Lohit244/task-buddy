@@ -77,8 +77,9 @@ export default function NewTask() {
     <div className="flex flex-col px-4">
       <div className="font-bold text-2xl">New Task</div>
       <div className="text-neutral-800">Create a new Task</div>
-      {newTaskMutation.isError && <div className="text-red-500">Error Creating Task</div>}
-      {readableError && <div className="text-red-500">{readableError}</div>}
+      {newTaskMutation.isError && (<div className="bg-red-100 text-red-800 p-4 rounded-md">
+        {(newTaskMutation.error as any)?.response?.data?.error || "Something went wrong"}
+      </div>)}
       <div className="flex flex-col md:flex-row gap-4 mt-4 w-full flex-wrap justify-center" >
         <Card className="w-full hover:shadow-lg transition-shadow duration-300 ease-in-out" >
           <form className="flex flex-col gap-2" onSubmit={(e) => {
@@ -114,7 +115,7 @@ export default function NewTask() {
               required
               id="assignedTo"
               addon={<FontAwesomeIcon icon={faUser} />}
-              value={newTask.assignedTo.join(", ")}
+              value={newTask.assignedTo.join(",")}
               helperText="Please Use a comma separated list of emails"
               onChange={(e) => {
                 setNewTask({
@@ -130,6 +131,6 @@ export default function NewTask() {
           </form>
         </Card>
       </div>
-    </div>
+    </div >
   )
 }
